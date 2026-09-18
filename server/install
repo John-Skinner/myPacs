@@ -1,0 +1,2 @@
+#!/bin/bash
+docker run -v ${1}:/tmp/data --rm --network=dcm4chee_network dcm4che/dcm4che-tools  storescu -cDCM4CHEE@arc:11112 /tmp/data
