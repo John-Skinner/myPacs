@@ -5,33 +5,28 @@ services:
   ldap:
     networks:
       - network
-    image: dcm4che/slapd-dcm4chee:2.6.6-32.0
+    image: dcm4che/slapd-dcm4chee:2.6.13-35.1
     logging:
       driver: json-file
       options:
         max-size: "10m"
     ports:
       - "389:389"
-    environment:
-      STORAGE_DIR: /storage/fs1
-      AE_TITLE: CENTRAL
+    env_file: docker-compose.env  
     volumes:
       - /var/local/dcm4chee-arc/ldap:/var/lib/openldap/openldap-data
       - /var/local/dcm4chee-arc/slapd.d:/etc/openldap/slapd.d
   db:
     networks:
       - network
-    image: dcm4che/postgres-dcm4chee:16.2-32
+    image: dcm4che/postgres-dcm4chee:17.9-35
     logging:
       driver: json-file
       options:
         max-size: "10m"
     ports:
      - "5432:5432"
-    environment:
-      POSTGRES_DB: pacsdb
-      POSTGRES_USER: pacs
-      POSTGRES_PASSWORD: pacs
+    env_file: docker-compose.env  
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /etc/timezone:/etc/timezone:ro
@@ -39,7 +34,7 @@ services:
   arc:
     networks:
       - network
-    image: dcm4che/dcm4chee-arc-psql:5.32.0
+    image: dcm4che/dcm4chee-arc-psql:5.35.0
     logging:
       driver: json-file
       options:
@@ -53,6 +48,7 @@ services:
       - "2762:2762"
       - "2575:2575"
       - "12575:12575"
+    env_file: docker-compose.env  
     environment:
       POSTGRES_DB: pacsdb
       POSTGRES_USER: pacs

@@ -1,0 +1,72 @@
+#!/bin/bash
+
+if [[ $# < 2 ]] ; then
+    echo 'arguments:  aet ip-address directory'
+    exit
+fi
+field=''
+matchDir=''
+srcdir=$3
+aet=$1
+ip=$2
+function getStrField
+{
+    val=$(dcmdump -Un +P $1,$2 $3)
+    t1=${val%]*}
+    t2=${t1#*[}
+    field=$t2;
+    if [[ $field =~ "no value available" ]]; then
+	    field=""
+    fi
+}
+cd $srcdir
+for df in *; do
+    if [ -d ${df} ]; then
+	    echo "Process Directory $df"
+      bash -x pushToPacs   $aet $ip $df
+    else
+        fileType=$(file $df)
+	typePortion=${fileType##*:}
+	if [[ $typePortion =~ "DICOM" ]]; then
+            getStrField 2 10 ${df}
+            transferSyntax=$field
+            processed=0
+            if [[ $transferSyntax = '1.2.840.10008.1.2.1' ]]; then
+                processed=1
+                dcmsend $1 $2 $df
+	    fi
+            if [[ $transferSyntax = '1.2.840.10008.1.2.4.51' ]]; then
+                processed=1
+                dcmsend -xx $1 $2 $df
+	    fi
+            if [[ $transferSyntax = '1.2.840.10008.1.2.4.50' ]]; then
+                processed=1
+                dcmsend -xy $1 $2 $df
+	    fi
+            if [[ $transferSyntax = '1.2.840.10008.1.2.4.90' ]]; then
+                processed=1
+                dcmsend -xv $1 $2 $df
+            fi
+            if [[ $transferSyntax = '1.2.840.10008.1.2.4.91' ]]; then
+                processed=1
+                dcmsend -xw $1 $2 $df
+            fi
+            if [[ $transferSyntax = '1.2.840.10008.1.2.5' ]]; then
+                processed=1
+                dcmsend -xr $1 $2 $df
+            fi
+	    if [[ $processed = 0 ]]; then
+	         if [[ $transferSyntax = '1.2.840.10008.1.2.4.70' ]]; then
+	             processed=1
+	             dcmsend -xs $1 $2 $df
+	         fi
+            fi
+	        
+	    if [[ $processed = 0 ]]; then
+	        echo 'transfer syntax unsupported file:' $df ' transfer syntax:' $transferSyntax
+            fi
+        else
+            echo "SKIPPING NON DICOM FILE: $df"
+	fi
+    fi
+done

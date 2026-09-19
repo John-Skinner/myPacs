@@ -1,0 +1,5 @@
+#!/bin/bash
+aet=CENTRAL
+ip=webviz.xyz
+bash -x pushToPacs $aet $ip $1
+

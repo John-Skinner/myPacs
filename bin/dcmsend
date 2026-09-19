@@ -1,0 +1,12 @@
+#!/bin/bash
+if [ $# = 3 ]; then
+   command="storescu -v -d --scan-directories --recurse -aet DCM4CHEE -aec $1 $2 11112 $3"
+fi
+if [ $# = 4 ]; then
+command="storescu -v -d --scan-directories --recurse $1 --required -aet DCM4CHEE -aec $2 $3 11112 $4"
+fi
+if (( $# < 3 )); then
+	echo "Must supply either 3 (remote AE (like ARC...), ipaddress, and directory) or 4 (-xv, (remote AE (like ARC...), ip address, and directory) as args"
+fi
+echo ${command}
+eval  ${command}
