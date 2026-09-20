@@ -1,0 +1,1 @@
+export APP_CONFIG='config/local_dcm4chee.js'
