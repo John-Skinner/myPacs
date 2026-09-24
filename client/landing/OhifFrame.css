@@ -1,0 +1,13 @@
+.OhifFrame {
+    text-align: center;
+    background-color: white;
+    min-height: calc(100vh - 140px);
+    border-width: 10px;
+    border-style: solid;
+    border-color: green;
+}
+.OhifFrameClass {
+    background-color: beige;
+    min-height: 85vh;
+    min-width: 90vw;
+}

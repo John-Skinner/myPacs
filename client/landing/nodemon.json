@@ -1,0 +1,7 @@
+{
+  "verbose": true,
+  "watch": ["src"],
+  "ext": "js,json,tsx,ts",
+  "ignore": ["node_modules"],
+  "exec": "yarn run dev"
+}
