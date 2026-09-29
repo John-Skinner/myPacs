@@ -1,0 +1,3 @@
+[submodule "client/OHIFViewers"]
+	path = client/OHIFViewers
+	url = git@github.com:John-Skinner/OHIFViewers.git
