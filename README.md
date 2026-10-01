@@ -19,3 +19,10 @@ Then you can use http-server like:
 cd client/OHIFViewers/platform/app/dist
 npx http-server $PWD -p 80
 ```
+## setting up keycloak
+url: 
+``` https://webviz.xyz/auth```
+## seeing the viewer
+url:
+```https://webviz.xhz/ohifViewer/```
+Need to have the final / due to ohif itself (not an nginx issue)

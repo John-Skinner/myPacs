@@ -14,7 +14,7 @@ services:
       - /etc/timezone:/etc/timezone:r0
       - /home/admin/myPacs/server/nginx.conf:/etc/nginx/nginx.conf:ro
       - /home/admin/myPacs/server/certs:/etc/certs:ro
-      - /home/admin/myPacs/client/OHIFViewers/platform/app/dist:/usr/share/nginx/html:ro
+      - /home/admin/myPacs/client:/usr/share/nginx/html:ro
       - /home/admin/myPacs/logs:/var/log/nginx
     command: [nginx-debug,'-g','daemon off;']
     depends_on:
@@ -72,8 +72,11 @@ services:
       POSTGRES_DB: pacsdb
       POSTGRES_USER: pacs
       POSTGRES_PASSWORD: pacs
-      WILDFLY_CHOWN: /storage
+      WILDFLY_CHOWN: "/opt/wildfly/standalone /storage"
       WILDFLY_WAIT_FOR: ldap:389 db:5432
+      KEYSTORE: /opt/wildfly/standalone/configuration/keystores/key.p12
+      KEYSTORE_PASSWORD: secret
+      KEYSTORE_TYPE: PKCS12
     depends_on:
       - ldap
       - db
@@ -82,18 +85,22 @@ services:
       - /etc/timezone:/etc/timezone:ro
       - /var/local/dcm4chee-arc/wildfly:/opt/wildfly/standalone
       - /var/local/dcm4chee-arc/storage:/storage
+      - /home/admin/myPacs/server/certs:/opt/wildfly/standalone/configuration/keystores
   keycloak:
     networks:
       - network
-    image: keycloak/keycloak:26.7.4-0
+    image: quay.io/keycloak/keycloak:26.7.4
     environment:
       KC_BOOTSTRAP_ADMIN_USERNAME: admin
       KC_BOOTSTRAP_ADMIN_PASSWORD: changeit
-      HTTP_PORT: 8880
-      HTTPS_PORT: 8843
-      MANAGEMENT_HTTP_PORT: 8990
-      MANAGEMENT_HTTPS_PORT: 8993
+      KC_HOSTNAME: webviz.xyz
+      KC_HTTP_ENABLED: true
+      KC_PROXY_HEADERS: xforwarded
+      KC_HTTP_RELATIVE_PATH: /auth
+      KC_HTTP_PORT: 8880
+    ports:
+      - "8880:8880"
+    volumes:
+      - ./keycloak_data:/opt/keycloak/data
     command: start-dev
-    depends_on:
-      - ldap
 
