@@ -4,13 +4,22 @@ import Keycloak from 'keycloak-js';
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import App from './App.vue'
-const bypassKC = true;
+const bypassKC = false;
+const kcOptions = {
+  url:'https://webviz.xyz/auth',
+  "auth-server-url":'https://webviz.xyz/auth/',
+  realm: 'users-realm',
+  clientId: 'ohif-viewer',
+  "ssl-required": "external",
+  resource: "ohif-viewer",
+  "public-client": true,
+  "confidential-port": 0
 
-const keycloak = new Keycloak({
-  url:'auth',
-  realm: 'master',
-  clientId: 'ohif-viewer'
-})
+};
+console.log(`kcOptions: ${JSON.stringify(kcOptions, null, 2)}`);
+console.log(`neurl: ${kcOptions.url} `);
+const keycloak = new Keycloak(kcOptions);
+
 if (!bypassKC) {
   try {
     console.log(`engage keycloak login`)

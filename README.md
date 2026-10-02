@@ -22,6 +22,23 @@ npx http-server $PWD -p 80
 ## setting up keycloak
 url: 
 ``` https://webviz.xyz/auth```
+ switch to users-realm or create it with realm id 'users-realm'.
+
+ create client (new client) with the following settings
+- clientId: 'ohif-viewer',
+- rootUrl: https://webviz.xyz
+- adminUrl: (same)
+- baseUrl: (same)
+- enabled: true
+- redirectUris: https://webviz.xyz/ohifViewer/*, https://webviz.xyz/,http://webviz.xyz/ohifViewer/*
+- webOrigins: https://webviz.xyz, http---
+- publicClient: true,
+- requirePKCE : true,
+- PKCE Methods: S256
+
+create user 
+
+
 ## seeing the viewer
 url:
 ```https://webviz.xhz/ohifViewer/```
