@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import ToolBar from "@/components/ToolBar.vue";
 import Viewer from "@/components/Viewer.vue";
+import { ref } from "vue";
+
 </script>
+
 
 <template>
 
@@ -9,6 +12,7 @@ import Viewer from "@/components/Viewer.vue";
   <main class="min-h-screen min-v-screen">
     <div class="min-h-screen min-v-screen">
       <div class="object-top">
+
         <ToolBar/>
       </div>
       <div class="object-bottom">

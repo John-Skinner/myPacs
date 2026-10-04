@@ -1,5 +1,7 @@
 import './assets/main.css'
 import Keycloak from 'keycloak-js';
+import './stores/windowGlobals.ts';
+import { useOhifAppStore } from '@/stores/ohifViewerAppStore'
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
@@ -19,6 +21,13 @@ const kcOptions = {
 console.log(`kcOptions: ${JSON.stringify(kcOptions, null, 2)}`);
 console.log(`neurl: ${kcOptions.url} `);
 const keycloak = new Keycloak(kcOptions);
+console.log(`about to try store`)
+//const store = useOhifAppStore();
+console.log(`store created`)
+window.keyCloakInstance = keycloak;
+
+
+console.log(`completed store of keycloak`)
 
 if (!bypassKC) {
   try {

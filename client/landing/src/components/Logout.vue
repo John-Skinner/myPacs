@@ -1,6 +1,18 @@
 <script setup lang="ts">
+import '../stores/ohifViewerAppStore.ts';
+
 const logoutAction = () => {
   console.log('login action')
+
+   const keycloakOptions = {
+    'redirectUri': 'https://webviz.xyz/'
+  }
+  if (window.keyCloakInstance) {
+    window.keyCloakInstance.logout(keycloakOptions)
+  }
+
+
+
 }
 </script>
 
