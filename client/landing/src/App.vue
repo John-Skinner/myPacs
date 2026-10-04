@@ -1,12 +1,25 @@
 <script setup lang="ts">
-import Login from './components/Login.vue'
+import ToolBar from "@/components/ToolBar.vue";
+import Viewer from "@/components/Viewer.vue";
 </script>
 
 <template>
 
 
-  <main>
-    <Login />
+  <main class="min-h-screen min-v-screen">
+    <div class="min-h-screen min-v-screen">
+      <div class="object-top">
+        <ToolBar/>
+      </div>
+      <div class="object-bottom">
+        <Viewer/>
+      </div>
+
+
+
+    </div>
+
+
   </main>
 </template>
 
@@ -20,7 +33,7 @@ header {
   margin: 0 auto 2rem;
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 512px) {
   header {
     display: flex;
     place-items: center;

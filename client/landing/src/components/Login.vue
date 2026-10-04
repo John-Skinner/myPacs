@@ -8,5 +8,5 @@ const loginAction = () => {
 
 <template>
 
- <button v-on:click="loginAction"> Login</button>
+ <button  class="border-4 border-indigo-500" v-on:click="loginAction"> Login</button>
 </template>
