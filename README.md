@@ -43,3 +43,27 @@ create user
 url:
 ```https://webviz.xhz/ohifViewer/```
 Need to have the final / due to ohif itself (not an nginx issue)
+
+## Integrating keycloak with google
+1) Login into the keycloak (webviz.xyz/auth/)
+2) Go to the realms for users
+3) Go to Identity providers
+4) Add the google provider
+5) keep the Redirecturi to insert into google's OIDC
+6) go to google and get the client ID and add it here as well as client secret.  More on the steps from google later
+7) save
+### Google steps for OpenID Connect
+1) Go to the google cloud console https://console.cloud.google.com.  You will be at a project (KCiodc)
+2) Click on the pancakes icon in upper-left, then pick API's & Services
+3) Click on Oath consent screen
+4) Pick external user
+5) Create
+6) fill out the App Information (app name, user support email, developer contact info) save
+7) click on Credentials in pancakes icon.
+8) choose create credentials
+9) select OAUTH client ID
+10) choose app type (web apps)
+11) enter Authorized javascript origins (https://webviz.xyz)
+12) Enter Authorized redirect URI's from the step above during keycloak setup.
+13) Create
+14) Grab the client id and secret to insert into the keycloak ID provider.
